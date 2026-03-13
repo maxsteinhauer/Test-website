@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Max Steinhauer — Strategic Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:     #F6EFE4;
+      --black:  #0A0A0A;
+      --g70:    #2E2E2E;
+      --g50:    #6B6B6B;
+      --g30:    #B8B8B8;
+      --div:    #E2D5C4;
+      --orange: #F05627;
+      --font:   'Inter', system-ui, sans-serif;
+      --mono:   'Roboto Mono', 'Courier New', monospace;
+      --nav-h:  56px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--black);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    section { padding: 64px 0; }
+
+    /* ── Nav — glass ─────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(246, 239, 228, 0.82);
+      backdrop-filter: blur(24px) saturate(160%) brightness(1.02);
+      -webkit-backdrop-filter: blur(24px) saturate(160%) brightness(1.02);
+      border-bottom: 1px solid rgba(255,255,255,0.5);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.65),
+        0 2px 24px rgba(10,10,10,0.06);
+    }
+
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: var(--nav-h);
+    }
+
+    .logo {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--black);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .logo:hover { color: var(--orange); }
+
+    nav ul { list-style: none; display: flex; gap: 28px; }
+
+    nav ul a {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--g70);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    nav ul a:hover { color: var(--black); }
+
+    /* ── Hero — full-bleed split ─────────────────────── */
+    #hero {
+      margin-top: var(--nav-h);
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr clamp(260px, 36vw, 420px);
+      min-height: calc(88vh - var(--nav-h));
+      border-bottom: 1px solid var(--div);
+    }
+
+    .hero-text-col {
+      display: flex;
+      align-items: center;
+      /* Left padding tracks the container's left edge */
+      padding: 64px 56px 64px max(24px, calc((100vw - 960px) / 2 + 32px));
+    }
+
+    .hero-text { max-width: 460px; }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--g50);
+      margin-bottom: 18px;
+    }
+
+    .hero-headline {
+      font-size: clamp(40px, 5.8vw, 72px);
+      font-weight: 800;
+      line-height: 0.97;
+      letter-spacing: -0.035em;
+      color: var(--black);
+      margin-bottom: 22px;
+    }
+
+    .hero-headline em {
+      font-style: normal;
+      color: var(--orange);
+    }
+
+    .hero-sub {
+      font-size: 15px;
+      color: var(--g50);
+      line-height: 1.75;
+      margin-bottom: 36px;
+    }
+
+    /* ── CTA — outlined with offset shadow ──────────── */
+    .hero-cta {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 22px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--black);
+      background: transparent;
+      border: 1.5px solid var(--black);
+      z-index: 0;
+      transition: color 0.22s, background 0.22s, border-color 0.22s;
+    }
+
+    .hero-cta::after {
+      content: '';
+      position: absolute;
+      inset: -1.5px;
+      background: var(--orange);
+      z-index: -1;
+      transform: translate(5px, 5px);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero-cta:hover { background: var(--orange); border-color: var(--orange); color: #fff; }
+    .hero-cta:hover::after { transform: translate(0, 0); }
+    .hero-cta .arrow { display: inline-block; transition: transform 0.2s; }
+    .hero-cta:hover .arrow { transform: translateX(3px); }
+
+    /* ── Hero photo — dark column so photo bg disappears */
+    .hero-photo-col {
+      overflow: hidden;
+      position: relative;
+      background: #0A0A0A;
+    }
+
+    .hero-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    /* ── Logos ──────────────────────────────────────── */
+    #logos {
+      padding: 28px 0;
+      border-bottom: 1px solid var(--div);
+      overflow: hidden;
+    }
+
+    .logos-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--g30);
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .logos-track {
+      overflow: hidden;
+      mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    }
+
+    .logos-inner {
+      display: flex;
+      align-items: center;
+      width: max-content;
+      animation: ticker 28s linear infinite;
+    }
+
+    .logos-inner:hover { animation-play-state: paused; }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .logo-item {
+      padding: 0 40px;
+      border-right: 1px solid var(--div);
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--g50);
+      white-space: nowrap;
+      transition: color 0.2s;
+      cursor: default;
+    }
+
+    .logo-item:hover { color: var(--black); }
+
+    /* ── Section label ──────────────────────────────── */
+    .section-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--g50);
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--div);
+    }
+
+    /* ── About ──────────────────────────────────────── */
+    #about { border-bottom: 1px solid var(--div); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .about-headline {
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    .about-headline em { font-style: normal; color: var(--orange); }
+
+    .about-body { font-size: 15px; color: var(--g70); line-height: 1.8; }
+    .about-body p + p { margin-top: 14px; }
+
+    .about-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 24px; }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--g70);
+      border: 1px solid var(--div);
+      padding: 4px 9px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .tag:hover { border-color: var(--orange); color: var(--orange); }
+
+    /* ── CV ─────────────────────────────────────────── */
+    #cv { border-bottom: 1px solid var(--div); }
+
+    .cv-grid { display: grid; grid-template-columns: 176px 1fr; }
+    .cv-entry { display: contents; }
+
+    .cv-entry + .cv-entry .cv-meta,
+    .cv-entry + .cv-entry .cv-detail { border-top: 1px solid var(--div); }
+
+    .cv-meta { padding: 20px 24px 20px 0; }
+
+    .cv-period {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--g50);
+    }
+
+    .cv-detail { padding: 20px 0; }
+    .cv-role { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+
+    .cv-org {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--orange);
+      margin-bottom: 7px;
+    }
+
+    .cv-desc { font-size: 13px; color: var(--g50); line-height: 1.7; max-width: 520px; }
+
+    .cv-section-break { grid-column: 1 / -1; padding: 32px 0 0; }
+    .cv-section-break .section-label { margin-bottom: 0; }
+
+    /* ── Contact — three boxes ──────────────────────── */
+    #contact { border-bottom: none; }
+
+    .contact-headline {
+      font-size: clamp(26px, 4vw, 44px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 32px;
+    }
+
+    .contact-headline .dot { color: var(--orange); }
+
+    .contact-boxes {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      /* Use 1px gap with background trick for clean dividers */
+      gap: 1px;
+      background: var(--div);
+      border: 1px solid var(--div);
+    }
+
+    .contact-box {
+      background: var(--bg);
+      padding: 28px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: var(--black);
+      transition: background 0.25s, color 0.2s;
+    }
+
+    .contact-box:hover { background: var(--black); }
+    .contact-box:hover .contact-box-label { color: rgba(255,255,255,0.4); }
+    .contact-box:hover .contact-box-value { color: #fff; }
+    .contact-box:hover .contact-box-arrow { color: var(--orange); transform: translateX(3px); }
+
+    .contact-box-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--g50);
+      margin-bottom: 16px;
+      transition: color 0.2s;
+    }
+
+    .contact-box-value {
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.4;
+      flex: 1;
+      margin-bottom: 20px;
+      word-break: break-word;
+      transition: color 0.2s;
+    }
+
+    .contact-box-arrow {
+      font-size: 18px;
+      color: var(--g30);
+      align-self: flex-end;
+      transition: transform 0.25s, color 0.2s;
+    }
+
+    /* ── Footer ─────────────────────────────────────── */
+    footer { border-top: 1px solid var(--div); padding: 22px 0; }
+
+    footer .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-name {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--g50);
+    }
+
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--g50);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Responsive ─────────────────────────────────── */
+    @media (max-width: 760px) {
+      .container { padding: 0 20px; }
+      section { padding: 48px 0; }
+
+      /* Hero stacks: photo on top, text below */
+      #hero {
+        grid-template-columns: 1fr;
+        grid-template-rows: 52vw auto;
+        min-height: unset;
+        margin-top: var(--nav-h);
+      }
+
+      .hero-photo-col { order: -1; }
+
+      .hero-photo { position: static; width: 100%; height: 100%; object-position: center 15%; }
+
+      .hero-text-col {
+        padding: 32px 20px 48px;
+        align-items: flex-start;
+      }
+
+      .about-grid { grid-template-columns: 1fr; gap: 24px; }
+
+      .cv-grid { grid-template-columns: 1fr; }
+      .cv-meta { padding: 18px 0 4px; }
+      .cv-detail { padding: 0 0 18px; }
+      .cv-entry + .cv-entry .cv-meta { border-top: 1px solid var(--div); padding-top: 18px; }
+      .cv-entry + .cv-entry .cv-detail { border-top: none; }
+
+      .contact-boxes { grid-template-columns: 1fr; }
+
+      footer .container { flex-direction: column; gap: 8px; }
+    }
+
+    @media (min-width: 761px) and (max-width: 960px) {
+      .hero-text-col { padding-left: 32px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+    }
+
+    /* ── Scroll fade-in ─────────────────────────────── */
+    .fi {
+      opacity: 0;
+      transform: translateY(16px);
+      transition:
+        opacity  0.6s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .fi.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="container">
+      <a href="#hero" class="logo">Max Steinhauer</a>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#cv">CV</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="hero">
+
+    <div class="hero-text-col">
+      <div class="hero-text">
+        <p class="eyebrow">Strategic Designer &amp; Design Consultant</p>
+        <h1 class="hero-headline">Fluent in<br>business.<br>Native in<br><em>design.</em></h1>
+        <p class="hero-sub">
+          I bridge strategy and design for organisations that want both to work — turning complex challenges into coherent, human experiences.
+        </p>
+        <a href="#contact" class="hero-cta">
+          Get in touch <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-photo-col">
+      <img
+        src="Brand_Assets/Gemini_Generated_Image_khp25gkhp25gkhp2.png"
+        alt="Max Steinhauer"
+        class="hero-photo"
+        loading="eager"
+      />
+    </div>
+
+  </section>
+
+  <!-- Logos -->
+  <div id="logos">
+    <p class="logos-label">Selected experience with</p>
+    <div class="logos-track">
+      <div class="logos-inner">
+        <span class="logo-item">IBM Consulting</span>
+        <span class="logo-item">BMW Group</span>
+        <span class="logo-item">Mercedes-Benz</span>
+        <span class="logo-item">HEYDAY AG</span>
+        <span class="logo-item">Intervivos AG</span>
+        <span class="logo-item">FOM Hochschule</span>
+        <span class="logo-item">IBM Consulting</span>
+        <span class="logo-item">BMW Group</span>
+        <span class="logo-item">Mercedes-Benz</span>
+        <span class="logo-item">HEYDAY AG</span>
+        <span class="logo-item">Intervivos AG</span>
+        <span class="logo-item">FOM Hochschule</span>
+        <span class="logo-item">IBM Consulting</span>
+        <span class="logo-item">BMW Group</span>
+        <span class="logo-item">Mercedes-Benz</span>
+        <span class="logo-item">HEYDAY AG</span>
+        <span class="logo-item">Intervivos AG</span>
+        <span class="logo-item">FOM Hochschule</span>
+        <span class="logo-item">IBM Consulting</span>
+        <span class="logo-item">BMW Group</span>
+        <span class="logo-item">Mercedes-Benz</span>
+        <span class="logo-item">HEYDAY AG</span>
+        <span class="logo-item">Intervivos AG</span>
+        <span class="logo-item">FOM Hochschule</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container">
+      <p class="section-label">About</p>
+      <div class="about-grid">
+        <div>
+          <h2 class="about-headline">Design as a<br>strategic <em>lever.</em></h2>
+        </div>
+        <div>
+          <div class="about-body">
+            <p>
+              I'm Max — a Design Consultant who sits at the intersection of business strategy and design practice. My work focuses on making that connection deliberate and productive rather than accidental.
+            </p>
+            <p>
+              Over the years I've worked with organisations navigating growth, transformation, and the question of what they actually stand for. I translate between the language of business and the logic of design — so neither side gets lost in translation.
+            </p>
+            <p>
+              I believe good design is a consequence of clear thinking. And clear thinking is a discipline that can be taught, scaled, and embedded.
+            </p>
+          </div>
+          <div class="about-tags">
+            <span class="tag">Design Strategy</span>
+            <span class="tag">Brand Systems</span>
+            <span class="tag">Service Design</span>
+            <span class="tag">Org Design</span>
+            <span class="tag">Facilitation</span>
+            <span class="tag">Innovation</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CV -->
+  <section id="cv">
+    <div class="container">
+      <p class="section-label">Experience</p>
+      <div class="cv-grid">
+
+        <div class="cv-entry">
+          <div class="cv-meta"><span class="cv-period">2024 — Now</span></div>
+          <div class="cv-detail">
+            <div class="cv-role">Associate Consultant, Experience Design</div>
+            <div class="cv-org">IBM Consulting</div>
+            <p class="cv-desc">Leading design strategy and experience design workstreams for enterprise clients across Germany. Responsible for translating complex business requirements into coherent service and digital product experiences, and for shaping the design direction of large-scale transformation programmes.</p>
+          </div>
+        </div>
+
+        <div class="cv-entry">
+          <div class="cv-meta"><span class="cv-period">2025 — Now</span></div>
+          <div class="cv-detail">
+            <div class="cv-role">Lecturer, Interaction Design</div>
+            <div class="cv-org">FOM Hochschule für Oekonomie &amp; Management</div>
+            <p class="cv-desc">Teaching Interaction Design to working professionals at one of Germany's largest private universities. Bridging academic design theory with applied practice — covering UX methodology, prototyping, and human-centred design principles.</p>
+          </div>
+        </div>
+
+        <div class="cv-entry">
+          <div class="cv-meta"><span class="cv-period">2022 — 2024</span></div>
+          <div class="cv-detail">
+            <div class="cv-role">Consultant, Experience Design</div>
+            <div class="cv-org">IBM Consulting</div>
+            <p class="cv-desc">Embedded within cross-functional IBM Garage teams to deliver human-centred design across transformation engagements. Facilitated discovery workshops, synthesised research into actionable insights, and shaped product strategy for clients in financial services and public sector.</p>
+          </div>
+        </div>
+
+        <div class="cv-entry">
+          <div class="cv-meta"><span class="cv-period">2022</span></div>
+          <div class="cv-detail">
+            <div class="cv-role">User Interaction Designer</div>
+            <div class="cv-org">Mercedes-Benz AG</div>
+            <p class="cv-desc">Developed UX concepts for in-vehicle interfaces including instrument cluster, head-up display, and general car functions. Produced and analysed UI concepts for next-generation vehicle interaction, with a focus on the driver–vehicle dialogue. Thesis: conceptual steering wheel interface design.</p>
+          </div>
+        </div>
+
+        <div class="cv-entry">
+          <div class="cv-meta"><span class="cv-period">2020 — 2021</span></div>
+          <div class="cv-detail">
+            <div class="cv-role">Designer (Freelance)</div>
+            <div class="cv-org">Steinhauer Design</div>
+            <p class="cv-desc">Worked with multiple early-stage start-ups to design solutions across packaging design, corporate identity, vehicle wrapping, and UX design. Focused on translating brand concepts into clear, user-centric visual and product experiences that support market entry and growth.</p>
+          </div>
+        </div>
+
+        <div class="cv-entry">
+          <div class="cv-meta"><span class="cv-period">2020</span></div>
+          <div class="cv-detail">
+            <div class="cv-role">Design Strategist</div>
+            <div class="cv-org">BMW Group</div>
+            <p class="cv-desc">Contributed to BMW's design strategy function within the Customer, Clinic, Benchmark and Innovation unit. Involved in customer experience research, competitive benchmarking, and the development of future mobility design concepts.</p>
+          </div>
+        </div>
+
+        <div class="cv-section-break">
+          <p class="section-label">Education</p>
+        </div>
+
+        <div class="cv-entry">
+          <div class="cv-meta"><span class="cv-period">2021 — 2024</span></div>
+          <div class="cv-detail">
+            <div class="cv-role">M.Sc. Technology &amp; Innovation Management</div>
+            <div class="cv-org">FOM Hochschule für Oekonomie &amp; Management</div>
+          </div>
+        </div>
+
+        <div class="cv-entry">
+          <div class="cv-meta"><span class="cv-period">2018 — 2022</span></div>
+          <div class="cv-detail">
+            <div class="cv-role">B.Sc. Industrial Product Engineering</div>
+            <div class="cv-org">Fontys Venlo University of Applied Sciences</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <p class="section-label">Contact</p>
+      <h2 class="contact-headline">Work with me<span class="dot">.</span></h2>
+
+      <div class="contact-boxes">
+
+        <a href="mailto:hello@maxsteinhauer.com" class="contact-box">
+          <span class="contact-box-label">Email</span>
+          <span class="contact-box-value">hello@maxsteinhauer.com</span>
+          <span class="contact-box-arrow">→</span>
+        </a>
+
+        <a href="https://linkedin.com/in/maxsteinhauer" target="_blank" rel="noopener" class="contact-box">
+          <span class="contact-box-label">LinkedIn</span>
+          <span class="contact-box-value">linkedin.com/in/maxsteinhauer</span>
+          <span class="contact-box-arrow">→</span>
+        </a>
+
+        <a href="https://read.cv/maxsteinhauer" target="_blank" rel="noopener" class="contact-box">
+          <span class="contact-box-label">Read.cv</span>
+          <span class="contact-box-value">read.cv/maxsteinhauer</span>
+          <span class="contact-box-arrow">→</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <span class="footer-name">Max Steinhauer</span>
+      <span class="footer-copy">© 2026</span>
+    </div>
+  </footer>
+
+
+  <script>
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      // Elements to animate — selected by role, not by added markup
+      const singles = [
+        ...document.querySelectorAll('.section-label'),
+        ...document.querySelectorAll('.contact-headline'),
+        ...document.querySelectorAll('.cv-detail'),
+        ...document.querySelectorAll('.logos-label'),
+      ];
+
+      // Groups where siblings stagger together
+      const groups = [
+        [...document.querySelectorAll('.about-grid > div')],
+        [...document.querySelectorAll('.contact-box')],
+      ];
+
+      // Apply .fi and optional stagger delay
+      singles.forEach(el => el.classList.add('fi'));
+
+      groups.forEach(group => {
+        group.forEach((el, i) => {
+          el.classList.add('fi');
+          if (i > 0) el.style.transitionDelay = (i * 70) + 'ms';
+        });
+      });
+
+      // Observe all marked elements
+      const all = [
+        ...singles,
+        ...groups.flat(),
+      ];
+
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('in');
+          // Clear delay after firing so it doesn't affect reverse scroll
+          entry.target.addEventListener('transitionend', () => {
+            entry.target.style.transitionDelay = '';
+          }, { once: true });
+          io.unobserve(entry.target);
+        });
+      }, { threshold: 0.12 });
+
+      all.forEach(el => io.observe(el));
+    }());
+  </script>
+
+</body>
+</html>
