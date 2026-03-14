@@ -487,7 +487,7 @@
     .cv-section-break { grid-column: 1 / -1; padding: 32px 0 0; }
     .cv-section-break .section-label { margin-bottom: 0; }
 
-    /* ── Contact — three boxes ──────────────────────── */
+    /* ── Contact — full-width rows ───────────────────── */
     #contact { border-bottom: none; }
 
     .contact-headline {
@@ -501,35 +501,26 @@
     .contact-headline .dot { color: var(--orange); }
 
     .contact-boxes {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      /* Use 1px gap with background trick for clean dividers */
-      gap: 1px;
-      background: var(--div);
-      border: 1px solid var(--div);
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid var(--div);
     }
 
     .contact-box {
-      background: var(--bg);
-      padding: 18px 24px 16px;
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--div);
       text-decoration: none;
       color: var(--black);
-      transition: background 0.25s, color 0.2s;
+      min-height: 44px;
     }
 
-    .contact-box:hover { background: var(--black); }
-    .contact-box:focus-visible { outline: 2px solid var(--orange); outline-offset: -2px; }
-    .contact-box:active { opacity: 0.88; }
-    .contact-box:hover .contact-box-label { color: rgba(255,255,255,0.4); }
-    .contact-box:hover .contact-box-value { color: #fff; }
-    .contact-box:hover .contact-box-arrow { color: var(--orange); transform: translateX(3px); }
-
-    /* Dark mode: --black is near-white, so flip text dark */
-    [data-theme="dark"] .contact-box:hover .contact-box-label { color: rgba(10,10,10,0.4); }
-    [data-theme="dark"] .contact-box:hover .contact-box-value { color: #131210; }
-    [data-theme="dark"] .contact-box:hover .contact-box-arrow { color: var(--orange); }
+    .contact-box:hover .contact-box-value { color: var(--orange); }
+    .contact-box:hover .contact-box-arrow { color: var(--orange); transform: translateX(4px); }
+    .contact-box:focus-visible { outline: 2px solid var(--orange); outline-offset: 4px; border-radius: 2px; }
+    .contact-box:active { opacity: 0.75; }
 
     .contact-box-label {
       font-family: var(--mono);
@@ -538,25 +529,22 @@
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--g50);
-      margin-bottom: 16px;
+      width: 72px;
+      flex-shrink: 0;
       transition: color 0.2s;
     }
 
     .contact-box-value {
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 500;
-      line-height: 1.4;
       flex: 1;
-      margin-bottom: 20px;
-      word-break: break-word;
       transition: color 0.2s;
     }
 
     .contact-box-arrow {
       font-size: 18px;
       color: var(--g30);
-      align-self: flex-end;
-      transition: transform 0.25s, color 0.2s;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s;
     }
 
     /* ── Footer ─────────────────────────────────────── */
@@ -799,8 +787,7 @@
       .cv-entry + .cv-entry .cv-meta { border-top: 1px solid var(--div); padding-top: 18px; }
       .cv-entry + .cv-entry .cv-detail { border-top: none; }
 
-      .contact-boxes { grid-template-columns: 1fr; }
-      .contact-box { padding: 24px 20px 20px; }
+      .contact-box { padding: 18px 0; }
 
       footer .container { font-size: 11px; }
     }
@@ -809,7 +796,7 @@
     @media (max-width: 480px) {
       nav { width: calc(100% - 32px); }
       nav ul { display: none; }
-      nav .container { grid-template-columns: 1fr auto; }
+      nav .container { grid-template-columns: 1fr auto; padding: 0 10px 0 20px; }
       /* Expand theme button touch target to 44px minimum */
       .theme-btn { width: 44px; height: 44px; }
     }
@@ -1065,17 +1052,12 @@
           <span class="contact-box-arrow">→</span>
         </a>
 
-        <a href="https://linkedin.com/in/maxsteinhauer" target="_blank" rel="noopener" class="contact-box">
+        <a href="https://linkedin.com/in/maxsteinhauer" target="_blank" rel="noopener noreferrer" class="contact-box">
           <span class="contact-box-label">LinkedIn</span>
           <span class="contact-box-value">linkedin.com/in/maxsteinhauer</span>
           <span class="contact-box-arrow">→</span>
         </a>
 
-        <a href="https://read.cv/maxsteinhauer" target="_blank" rel="noopener" class="contact-box">
-          <span class="contact-box-label">Read.cv</span>
-          <span class="contact-box-value">read.cv/maxsteinhauer</span>
-          <span class="contact-box-arrow">→</span>
-        </a>
 
       </div>
     </div>
@@ -1118,7 +1100,7 @@
 
         <div class="modal-block">
           <p class="modal-block-title">Contact</p>
-          <p>Email: <a href="mailto:mxsteinhauer@gmail.com">mxsteinhauer@gmail.com</a></p>
+          <p>Email: <a href="mailto:hello@maxsteinhauer.com">hello@maxsteinhauer.com</a></p>
         </div>
 
         <div class="modal-block">
@@ -1128,7 +1110,7 @@
 
         <div class="modal-block">
           <p class="modal-block-title">EU dispute resolution</p>
-          <p>The European Commission provides a platform for online dispute resolution: <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">ec.europa.eu/consumers/odr</a></p>
+          <p>The European Commission provides a platform for online dispute resolution: <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer">ec.europa.eu/consumers/odr</a></p>
           <p>I am neither willing nor obliged to participate in dispute resolution proceedings before a consumer arbitration board.</p>
         </div>
 
